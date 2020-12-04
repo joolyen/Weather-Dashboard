@@ -2,11 +2,12 @@
 var citySearch = document.querySelector('#submit')
 var cityDisplay = document.querySelector('#cityName');
 var apiKey = "bd613cfad0bef6db63ac6849f52f7a0e";
+var date = moment().format("MM/DD/YYYY");
 
 function getWeather(cityValue) {
 
   var weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityValue + "&APPID=" + apiKey + "&units=imperial";
-
+  var fiveDayURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityValue + "&APPID=" + apiKey + "&units=imperial";
 
   $.ajax({
     url: weatherQueryURL,
@@ -28,21 +29,34 @@ function getWeather(cityValue) {
         $('#weather-display').empty();
         var uvIndex = data[0].value;
 
-        $('#weather-display').append('<h1>' + cityValue + '</h1>' + 
-                                     '<p>Temperature: ' + temp + `<img class="weatherImage" src="https://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png" />` + "</p>" + 
+        $('#weather-display').append('<h1>' + cityValue + ' (' + date + ')</h1>' + 
+                                     '<p>Temperature: ' + temp + '&#8457;' + `<img class="weatherImage" src="https://openweathermap.org/img/wn/${response.weather[0].icon}.png" />` + "</p>" + 
                                      '<p>Humidity: ' + humidity + "%</p>" +
                                      '<p>Wind Speed: ' + wind + "</p>" +
                                      '<p>UV Index: <span class="uvIndex">' + uvIndex + "</span></p>");
-        console.log()
     });
 
+    $.ajax({
+      url: fiveDayURL,
+      method: "GET"
+    }).then(function (response) {
+      var day = [0, 8, 16, 24, 32];
+      var fiveDayCard = $(".fiveDayCard").addClass("card-body");
+      var fiveDayDiv = $(".fiveDay").addClass("card-text");
+      fiveDayDiv.empty();
+      day.forEach(function (i) {
+        var FiveDayTime = new Date(response.list[i].dt * 1000);
+        FiveDayTime = FiveDayTime.toLocaleDateString("en-US");
+
+        fiveDayDiv.append("<div class=blueCard>" + "<p>" + FiveDayTime + "</p>" + `<img src="https://openweathermap.org/img/wn/${response.list[i].weather[0].icon}.png">` + "<p>" + "Temperature: " + response.list[i].main.temp + "</p>" + "<p>" + "Humidity: " + response.list[i].main.humidity + "%" + "</p>" + "</div>");
+
+
+    })
+      console.log(response);
+    });
+
+
   });
-
-  // Constructing Variables
-  
-
-
-
 
 }
 

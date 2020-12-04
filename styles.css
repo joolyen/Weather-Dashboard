@@ -3,8 +3,7 @@ nav h1 {
     margin:0 auto;
 }
 
-.container {
-    clear:both;
+.container-fluid {
     margin:5em auto;
 }
 
@@ -30,10 +29,25 @@ nav h1 {
     min-height:400px;
 }
 
+#weather-display p {
+    line-height:1.5em;
+}
+
 .uvIndex {
     background:#DC143C;
     color:#fff;
     border-radius: 3px;
     padding:.5em;
     max-width: 3em;
+}
+
+.blueCard{
+    padding: 20px;
+    background-color: #1E90FE;
+    font-weight:bold;
+    font-size:1em;
+    color: white;
+    float: left;
+    margin: 0 .25em;
+    border-radius: 3px;
 }
