@@ -3,7 +3,7 @@ nav h1 {
     margin:0 auto;
 }
 
-.container-fluid {
+.container {
     margin:5em auto;
 }
 
@@ -50,4 +50,5 @@ nav h1 {
     float: left;
     margin: 0 .25em;
     border-radius: 3px;
+    width:18%;
 }
